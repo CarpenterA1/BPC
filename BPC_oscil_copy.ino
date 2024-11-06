@@ -79,7 +79,7 @@ void loop() {
   // Check if 28 seconds have passed since the threshold was exceeded
   if (startBPMCalculation && (currentTime - BPMStartTime >= BPMCalculationDelay)) {
     // Calculate BPM from the collected pulse data
-    if (pulseCount >= 2) {
+    if (pulseCount >= ) {
       float totalInterval = 0;
 
       // Calculate intervals between consecutive pulses
@@ -135,20 +135,53 @@ void loop() {
   lastButtonState = reading;
 
   // Print debugging information
-  Serial.print("Pulse Voltage: ");
-  Serial.print(pulseVoltage);
-  Serial.print(" | Pressure Voltage: ");
-  Serial.print(pressureVoltage);
-  Serial.print(" | Inflation State: ");
-  Serial.println(inflationState);
+  // Serial.print("Pulse Voltage: ");
+  // Serial.print(pulseVoltage);
+  // Serial.print(" | Pressure Voltage: ");
+  // Serial.print(pressureVoltage);
+  // Serial.print(" | Inflation State: ");
+  // Serial.println(inflationState);
 
   // Print stored pressure voltages for debugging
-  Serial.print("Stored Pressure Voltages: ");
-  for (int i = 0; i < pressureCount; i++) {
-    Serial.print(pressureVoltages[i]);
-    Serial.print(" ");
-  }
-  Serial.println();
+  // Serial.print("Stored Pressure Voltages: ");
+  // for (int i = 0; i < pressureCount; i++) {
+  //   Serial.print(pressureVoltages[i]);
+  //   Serial.print(" ");
+  // }
+  // Serial.println();
 
   delay(sampleRate); // Delay for sampling rate
 }
+
+
+
+
+
+//h
+
+
+  if (voltage > threshold) {
+    // Start tracking pulse if not already tracking
+    if (!trackingPulse) {
+      trackingPulse = true;
+      peakValue = voltage;       // Initialize peak with the current voltage
+      valleyValue = voltage;     // Initialize valley with the current voltage
+      lastPeakTime = currentTime; // Set the start time of the pulse
+    }
+
+    // Update peak and valley values during the pulse
+    if (voltage > peakValue) {
+      peakValue = voltage;
+    }
+    if (voltage < valleyValue) {
+      valleyValue = voltage;
+    }
+  } 
+  else {
+    // Pulse ended when the voltage drops below the threshold
+    if (trackingPulse) {
+      trackingPulse = false; // Stop tracking the current pulse
+
+      // Calculate pulse amplitude
+      float pulseAmplitude = peakValue - valleyValue;
+
