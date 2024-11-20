@@ -4,7 +4,7 @@ const int pressurePin = A0;       // Pressure sensor pin
 const int buttonPin = 2;          // Pushbutton pin
 const int TransistorGate = 13;    // Transistor gate pin for cuff control
 
-const float pressureThreshold = 3.35; // Start tracking when pressure voltage > 3V with .35v buffer
+const float pressureThreshold = 3.45; // Start tracking when pressure voltage > 3V with .35v buffer
 const float peakThreshold = 3.0;     // Voltage above which we start tracking a peak
 const int sampleRate = 10;           // Sample rate in milliseconds
 const int maxReadings = 100;         // Maximum number of readings
